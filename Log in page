@@ -1,0 +1,95 @@
+"""
+Author : Tadiwanashe Antony Tuwacha
+Program : This program will ask the user for login credentials
+Date : 11/16/2024
+"""
+from tkinter import *
+from tkinter import messagebox
+import tkinter as tk
+import re
+
+
+def validate_email(email):
+    # Regular expression for validating an email
+    email_regex = r'^[a-zA-Z0-9.-]+@[a-zA-Z0-9]+\.[a-zA-Z]{1,3}$'
+
+    if re.match(email_regex, email):
+        return True
+    else:
+        messagebox.showerror("Login Failed", "Invalid email address. Please try again.")
+        return False
+
+
+def validate_password(password):
+    # Regular expression for validating password: at least 8 characters, one uppercase, one lowercase, one digit, and one special character
+    password_regex = r'^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$'
+
+    if re.fullmatch(password_regex, password):
+        return True
+    else:
+        messagebox.showerror("Login Failed", "Invalid password. Your password must "
+                                             "be at least 8 characters, contain at least one "
+                                             "uppercase letter, one lowercase letter, one digit, and one special character.")
+        return False
+
+
+# Function to handle login
+def check_login():
+    email = user.get()
+    password = code.get()
+
+    # Validate email and password
+    if not validate_email(email):
+        return
+    if not validate_password(password):
+        return
+
+    # You can replace this with actual authentication logic
+    stored_email = "tadituwacha@gmail.com"  # Example stored email
+    stored_password = "Cybersecurity@123"  # Example stored password
+
+    if email == stored_email and password == stored_password:
+        messagebox.showinfo("Login Successful", "Welcome!")
+    else:
+        messagebox.showerror("Login Failed", "Email or Password is incorrect")
+
+
+root = tk.Tk()
+root.title('Login')
+root.geometry("400x500")
+root.configure(bg="#fff")
+
+frame = Frame(root, width=500, height=500, bg='white')
+frame.place(x=0, y=5)
+
+heading = Label(frame, text="Log-in to your Account", fg='#57a1f8', bg='white', font=('Microsoft Yahei UI Light', 18, 'bold'))
+heading.place(x=60, y=30)
+
+# Entry for Email
+Label(frame, text="Email", bg='#fff', fg="black", font=('Microsoft Yahei UI Light', 11, 'bold')).place(x=10, y=145)
+user = Entry(frame, width=25, fg="black", border=0, bg="white", font=('Microsoft Yahei UI Light', 11, ))
+user.place(x=100, y=150)
+
+Frame(frame, width=210, height=2, bg='black').place(x=100, y=170)
+
+# Entry for Password
+Label(frame, text="Password", bg='#fff', fg="black", font=('Microsoft Yahei UI Light', 11, 'bold')).place(x=10, y=195)
+code = Entry(frame, show='*', width=25, fg="black", border=0, bg="white", font=('Microsoft Yahei UI Light', 11))
+code.place(x=100, y=200)
+
+Frame(frame, width=210, height=2, bg='black').place(x=100, y=220)
+
+# Login Button
+Button(frame, width=17, border=0, text=" Login", fg="black", bg='#57a1f8', font=('Microsoft Yahei UI Light', 16,), command=check_login).place(x=100, y=250)
+
+label = Label(frame, text="Create a new Account?", bg="#fff", fg="#57a1f8", font=('Microsoft Yahei UI Light', 9))
+label.place(x=50, y=300)
+
+label1 = Label(frame, text="or", bg="#fff", fg="black", font=('Microsoft Yahei UI Light', 9))
+label1.place(x=190, y=300)
+
+label2 = Label(frame, text="Forgot Password?", bg="#fff", fg="#57a1f8", font=('Microsoft Yahei UI Light', 9))
+label2.place(x=220, y=300)
+
+root.mainloop()
+
